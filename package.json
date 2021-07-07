@@ -1,0 +1,40 @@
+{
+    "name": "@roadiz/nuxt-plugin",
+    "version": "0.1.0",
+    "description": "Nuxt Typescript plugin for Roadiz API client.",
+    "main": "dist/plugin.js",
+    "repository": "git@github.com:roadiz/nuxt-plugin.git",
+    "author": "Ambroise Maupate <ambroise@rezo-zero.com>",
+    "license": "MIT",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc -p tsconfig-build.json",
+        "prepublishOnly": "yarn build",
+        "lint": "eslint --fix --ext \".js,.ts,.json\" ./src"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@roadiz/abstract-api-client": "^0.1.12",
+        "axios": "^0.21.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.14.6",
+        "@babel/plugin-transform-runtime": "^7.14.5",
+        "@babel/preset-env": "^7.14.7",
+        "@babel/preset-typescript": "^7.14.5",
+        "@nuxt/types": "^2.15.7",
+        "@nuxt/typescript-build": "^2.1.0",
+        "@typescript-eslint/eslint-plugin": "^4.28.2",
+        "@typescript-eslint/parser": "^4.28.2",
+        "eslint": "^7.30.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^3.4.0",
+        "nuxt": "^2.15.7",
+        "prettier": "^2.3.2",
+        "typescript": "^4.3.5"
+    }
+}

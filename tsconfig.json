@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "outDir": "dist",
+        "lib": ["es2016", "dom"]
+    },
+    "files": ["src/plugin.ts"],
+    "include": ["tests/**/*"],
+    "exclude": ["dist"]
+}
