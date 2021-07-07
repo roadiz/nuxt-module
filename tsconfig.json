@@ -9,7 +9,7 @@
         "outDir": "dist",
         "lib": ["es2016", "dom"]
     },
-    "files": ["src/index.d.ts", "src/module.ts", "src/plugin.ts"],
+    "files": ["src/module.ts", "src/plugin.ts"],
     "include": ["tests/**/*"],
     "exclude": ["dist"]
 }

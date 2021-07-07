@@ -10,8 +10,8 @@ Nuxt Typescript plugin for Roadiz API client.
 ```js
 // nuxt.config.js
 
-plugins: [
-    '~/node_modules/@roadiz/nuxt-plugin'
+modules: [
+    '@roadiz/nuxt-plugin'
 ],
     
 publicRuntimeConfig: {
