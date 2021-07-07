@@ -11,13 +11,7 @@ export interface RoadizPluginConfig {
     origin: string
 }
 
-declare module '@nuxt/types' {
-    interface Context {
-        $roadiz: NuxtRoadizApi
-    }
-}
-
-class NuxtRoadizApi extends RoadizApi {
+export class NuxtRoadizApi extends RoadizApi {
     private _context: Context
     private _origin?: string | null
 
