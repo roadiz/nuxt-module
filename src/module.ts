@@ -1,4 +1,4 @@
-import path from 'path'
+import { resolve } from 'path'
 import { NuxtRoadizApi, RoadizPluginConfig } from './plugin'
 import { Module } from '@nuxt/types'
 
@@ -19,8 +19,13 @@ interface RoadizModuleOptions {
 }
 
 const roadizModule: Module<RoadizModuleOptions> = function (moduleOptions) {
+    const options = this.options.roadiz || moduleOptions
     // Register plugin
-    this.addPlugin(path.resolve(__dirname, 'plugin.js'))
+    this.addPlugin({
+        src: resolve(__dirname, './plugin.js'),
+        fileName: 'nuxt-module.js',
+        options
+    })
 }
 
 export default roadizModule

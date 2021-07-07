@@ -1,9 +1,9 @@
-# nuxt-plugin
-Nuxt Typescript plugin for Roadiz API client.
+# nuxt-module
+Nuxt Typescript module for Roadiz API client.
 
 ## Usage
 
-`yarn add @roadiz/nuxt-plugin`
+`yarn add @roadiz/nuxt-module`
 
 ### Configuration
 
@@ -11,7 +11,7 @@ Nuxt Typescript plugin for Roadiz API client.
 // nuxt.config.js
 
 modules: [
-    '@roadiz/nuxt-plugin'
+    '@roadiz/nuxt-module'
 ],
     
 publicRuntimeConfig: {

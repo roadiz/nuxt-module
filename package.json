@@ -1,9 +1,9 @@
 {
-    "name": "@roadiz/nuxt-plugin",
+    "name": "@roadiz/nuxt-module",
     "version": "0.1.1",
-    "description": "Nuxt Typescript plugin for Roadiz API client.",
+    "description": "Nuxt Typescript module for Roadiz API client.",
     "main": "dist/module.js",
-    "repository": "git@github.com:roadiz/nuxt-plugin.git",
+    "repository": "git@github.com:roadiz/nuxt-module.git",
     "author": "Ambroise Maupate <ambroise@rezo-zero.com>",
     "license": "MIT",
     "files": [
