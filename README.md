@@ -44,9 +44,9 @@ async asyncData({ $roadiz, route, req }: Context): Promise<object | void> | obje
             return {
                 pageData,
                 altLinks,
-                blogPosts: blocks.data["hydra:member"],
-                blogPostsCount: blocks.data["hydra:totalItems"],
-                tags: tags.data["hydra:member"]
+                blogPosts: blogPostsResponse.data["hydra:member"],
+                blogPostsCount: blogPostsResponse.data["hydra:totalItems"],
+                tags: blogPostTagsResponse.data["hydra:member"]
             }
     }
     
