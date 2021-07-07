@@ -9,6 +9,13 @@
     "files": [
         "dist"
     ],
+    "keywords": [
+        "nuxt",
+        "module",
+        "nuxt-module",
+        "roadiz",
+        "cms"
+    ],
     "scripts": {
         "build": "tsc -p tsconfig-build.json",
         "prepublishOnly": "yarn build",

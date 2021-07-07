@@ -23,7 +23,7 @@ const roadizModule: Module<RoadizModuleOptions> = function (moduleOptions) {
     // Register plugin
     this.addPlugin({
         src: resolve(__dirname, './plugin.js'),
-        fileName: 'nuxt-module.js',
+        fileName: 'roadiz/plugins/roadiz.js',
         options
     })
 }
