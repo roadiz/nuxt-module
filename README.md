@@ -7,6 +7,8 @@ Nuxt Typescript module for Roadiz API client.
 
 ### Configuration
 
+Add module in you `nuxt.config.js` file and fill you API configuration values in `publicRuntimeConfig`:
+
 ```js
 // nuxt.config.js
 
@@ -25,7 +27,24 @@ publicRuntimeConfig: {
 }
 ```
 
+Make sure to add a default `origin` for any server side requests if you Roadiz API is secured by *RefererRegex*.
+
+Add typescript declarations in your `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "types": [
+      "@roadiz/abstract-api-client",
+      "@roadiz/nuxt-module"
+    ]
+  }
+}
+```
+
 ### API SDK
+
+Here is a simple example how to fetch Roadiz API content during `asyncData`:
 
 ```ts
 async asyncData({ $roadiz, route, req }: Context): Promise<object | void> | object | void {
