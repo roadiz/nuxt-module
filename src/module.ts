@@ -18,6 +18,13 @@ const roadizModule: Module<RoadizModuleOptions> = function (moduleOptions) {
 
 ;(roadizModule as any).meta = require('../package.json')
 
+declare module '@nuxt/types/config/runtime' {
+    // runtime config in nuxt.config.ts
+    interface NuxtRuntimeConfig {
+        roadiz?: RoadizPluginConfig
+    }
+}
+
 declare module '@nuxt/types' {
     interface Context {
         $roadiz: NuxtRoadizApi
