@@ -4,26 +4,23 @@ import RoadizApi from '@roadiz/abstract-api-client'
 import { AxiosRequestConfig } from 'axios'
 
 export interface RoadizPluginConfig {
-    baseUrl: string
-    apiKey: string
+    baseURL: string
+    apiKey?: string
     preview?: boolean
     debug?: boolean
-    origin: string
+    origin?: string
+    defaults?: AxiosRequestConfig
 }
 
 export class NuxtRoadizApi extends RoadizApi {
     private _context: Context
-    private _origin?: string | null
+    private _origin?: string
 
-    constructor(
-        context: Context,
-        baseURL: string,
-        apiKey: string,
-        preview: boolean,
-        debug: boolean,
-        origin: string | null
-    ) {
-        super(baseURL, apiKey, preview, debug)
+    constructor(context: Context, config: RoadizPluginConfig) {
+        const { baseURL, apiKey, preview, debug, origin, defaults } = config
+
+        super(baseURL, { apiKey, preview, debug, defaults })
+
         this._context = context
         this._origin = origin
     }
@@ -32,8 +29,8 @@ export class NuxtRoadizApi extends RoadizApi {
         return this._context
     }
 
-    get origin(): string | null {
-        return this._origin || null
+    get origin(): string | undefined {
+        return this._origin
     }
 
     protected onApiRequest(config: AxiosRequestConfig): AxiosRequestConfig {
@@ -59,8 +56,8 @@ export class NuxtRoadizApi extends RoadizApi {
     }
 }
 
-export default function (context: Context, inject: Inject) {
-    const { baseUrl, apiKey, preview, debug, origin } = context.$config.roadiz as RoadizPluginConfig
+export default function (context: Context, inject: Inject): void {
+    const config = context.$config.roadiz as RoadizPluginConfig
 
-    inject('roadiz', new NuxtRoadizApi(context, baseUrl, apiKey, preview || false, debug || false, origin || null))
+    if (config && config.baseURL) inject('roadiz', new NuxtRoadizApi(context, config))
 }

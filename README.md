@@ -35,7 +35,6 @@ Add typescript declarations in your `tsconfig.json`:
 {
   "compilerOptions": {
     "types": [
-      "@roadiz/abstract-api-client",
       "@roadiz/nuxt-module"
     ]
   }
@@ -48,26 +47,10 @@ Here is a simple example how to fetch Roadiz API content during `asyncData`:
 
 ```ts
 async asyncData({ $roadiz, route, req }: Context): Promise<object | void> | object | void {
-    const path = req ? req.url : route.fullPath
-    const response = await $roadiz.getSingleNodesSourcesByPath(path)
+    const path = route.params.pathMatch
+    const response = await $roadiz.getWebResponseByPath(path)
     const pageData = response.data
-    const altLinks = $roadiz.getAlternateLinks(response)
-
-    switch (data["@type"]) {
-        case 'BlogPostListing':
-            const [blogPostsResponse, blogPostTagsResponse] = await Promise.all([
-                $roadiz.getNodesSourcesForType<NSBlogPost>('blogpost'),
-                $roadiz.getTagsForType('blogpost')
-            ])
-
-            return {
-                pageData,
-                altLinks,
-                blogPosts: blogPostsResponse.data["hydra:member"],
-                blogPostsCount: blogPostsResponse.data["hydra:totalItems"],
-                tags: blogPostTagsResponse.data["hydra:member"]
-            }
-    }
+    const altLinks = await $roadiz.getAlternateLinks(response)
     
     return {
         pageData,
