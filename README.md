@@ -18,7 +18,7 @@ modules: [
     
 publicRuntimeConfig: {
     roadiz: {
-        baseUrl: 'https://myroadizapi.test/api/1.0',
+        baseURL: 'https://myroadizapi.test/api/1.0',
         apiKey: 'xxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx',
         preview: false,
         debug: false,
