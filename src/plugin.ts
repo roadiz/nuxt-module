@@ -37,7 +37,7 @@ export class NuxtRoadizApi extends RoadizApi {
         config = super.onApiRequest(config)
 
         if (process.server && this.context.req && this.context.req.headers) {
-            config.headers.common.origin = this.context.req.headers.origin || this.origin
+            config.headers.common.origin = this.context.req.headers.origin || this.origin || null
             config.headers.common['accept-language'] = this.context.req.headers['accept-language'] || null
 
             for (const propName of config.headers.common) {
