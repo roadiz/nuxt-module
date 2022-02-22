@@ -20,7 +20,7 @@ publicRuntimeConfig: {
     roadiz: {
         baseURL: 'https://myroadizapi.test/api/1.0',
         apiKey: 'xxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx',
-        preview: false,
+        allowClientPreview: true,
         debug: false,
         origin: 'https://mywebsite.test'
     }
@@ -58,3 +58,12 @@ async asyncData({ $roadiz, route, req }: Context): Promise<object | void> | obje
     }
 }
 ```
+
+### Client previewing
+
+If you enable `allowClientPreview` config, NuxtRoadizApi will append `_preview` and `token` query parameters to any
+API request to your Roadiz API. `_preview` parameter will be passed-through, and `token` parameter will be added as 
+`Authorization: Bearer ${token}` header.
+
+If your user is currently *previewing* with a JWT, `$roadiz.previewingJwt` (`RoadizPreviewJwt`) object will be available 
+to display information on your website.
