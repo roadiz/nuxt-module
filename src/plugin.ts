@@ -73,14 +73,15 @@ export class NuxtRoadizApi extends RoadizApi {
          * Pass through preview state and JWT token to Roadiz API
          */
         if (this._allowClientPreview && this.context.req && this.context.req.url) {
-            const currentUrl = new URL(this.context.req.url)
+            // Need to prepend a https scheme to pass a valid URL.
+            const currentUrl = new URL('http://localhost' + this.context.req.url)
             if (
                 currentUrl.searchParams.has('_preview') &&
                 currentUrl.searchParams.get('_preview') === '1' &&
                 currentUrl.searchParams.has('token') &&
                 currentUrl.searchParams.get('token') !== ''
             ) {
-                config.headers.params['_preview'] = '1'
+                config.params['_preview'] = '1'
                 config.headers.common.Authorization = `Bearer ${currentUrl.searchParams.get('token')}`
                 this._previewing = true
                 this._previewingJwt = this.getJwtPayload(currentUrl.searchParams.get('token'))
@@ -97,10 +98,16 @@ export class NuxtRoadizApi extends RoadizApi {
 
     protected getJwtPayload(token: string | null): RoadizPreviewJwt {
         if (token) {
+            let decodedBase64
             const base64Url = token.split('.')[1]
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+            if (atob) {
+                decodedBase64 = atob(base64)
+            } else {
+                decodedBase64 = Buffer.from(base64, 'base64').toString()
+            }
             const jsonPayload = decodeURIComponent(
-                atob(base64)
+                decodedBase64
                     .split('')
                     .map((c) => {
                         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
