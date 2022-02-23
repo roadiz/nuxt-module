@@ -10,6 +10,11 @@ export interface RoadizPreviewJwt {
     username: string
 }
 
+interface RoadizPreviewQuery {
+    _preview?: '0' | '1'
+    token?: string
+}
+
 export interface RoadizPluginConfig {
     baseURL: string
     apiKey?: string
@@ -22,8 +27,6 @@ export interface RoadizPluginConfig {
 
 export class NuxtRoadizApi extends RoadizApi {
     private _context: Context
-    private _previewing: boolean
-    private _previewingJwt: RoadizPreviewJwt | null
     private _allowClientPreview: boolean
     private _origin?: string
 
@@ -34,8 +37,6 @@ export class NuxtRoadizApi extends RoadizApi {
 
         this._context = context
         this._origin = origin
-        this._previewing = false
-        this._previewingJwt = null
         this._allowClientPreview = allowClientPreview || false
     }
 
@@ -45,14 +46,6 @@ export class NuxtRoadizApi extends RoadizApi {
 
     get origin(): string | undefined {
         return this._origin
-    }
-
-    get isPreviewing(): boolean {
-        return this._previewing
-    }
-
-    get previewingJwt(): RoadizPreviewJwt | null {
-        return this._previewingJwt
     }
 
     protected onApiRequest(config: AxiosRequestConfig): AxiosRequestConfig {
@@ -72,20 +65,10 @@ export class NuxtRoadizApi extends RoadizApi {
         /*
          * Pass through preview state and JWT token to Roadiz API
          */
-        if (this._allowClientPreview && this.context.req && this.context.req.url) {
-            // Need to prepend a https scheme to pass a valid URL.
-            const currentUrl = new URL('http://localhost' + this.context.req.url)
-            if (
-                currentUrl.searchParams.has('_preview') &&
-                currentUrl.searchParams.get('_preview') === '1' &&
-                currentUrl.searchParams.has('token') &&
-                currentUrl.searchParams.get('token') !== ''
-            ) {
-                config.params['_preview'] = '1'
-                config.headers.common.Authorization = `Bearer ${currentUrl.searchParams.get('token')}`
-                this._previewing = true
-                this._previewingJwt = this.getJwtPayload(currentUrl.searchParams.get('token'))
-            }
+        const previewingToken = this.getPreviewingToken()
+        if (previewingToken !== null) {
+            config.params['_preview'] = '1'
+            config.headers.common.Authorization = `Bearer ${previewingToken}`
         }
 
         if (process.server) {
@@ -94,6 +77,25 @@ export class NuxtRoadizApi extends RoadizApi {
         }
 
         return config
+    }
+
+    protected getPreviewingToken(query: RoadizPreviewQuery | null = null): string | null {
+        query = query || (this.context.query as RoadizPreviewQuery)
+        if (this._allowClientPreview && query) {
+            if (query._preview && query._preview === '1' && query.token && query.token !== '') {
+                return query.token as string
+            }
+        }
+        return null
+    }
+
+    public isPreviewing(query: RoadizPreviewQuery | null = null): boolean {
+        return this.getPreviewingToken(query) !== null
+    }
+
+    public getPreviewingJwt(query: RoadizPreviewQuery | null = null): RoadizPreviewJwt | null {
+        const token = this.getPreviewingToken(query)
+        return token !== null ? this.getJwtPayload(token) : null
     }
 
     protected getJwtPayload(token: string | null): RoadizPreviewJwt {
