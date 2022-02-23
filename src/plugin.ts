@@ -24,7 +24,7 @@ export class NuxtRoadizApi extends RoadizApi {
     private _context: Context
     private _previewing: boolean
     private _previewingJwt: RoadizPreviewJwt | null
-    private allowClientPreview: boolean
+    private _allowClientPreview: boolean
     private _origin?: string
 
     constructor(context: Context, config: RoadizPluginConfig) {
@@ -36,7 +36,7 @@ export class NuxtRoadizApi extends RoadizApi {
         this._origin = origin
         this._previewing = false
         this._previewingJwt = null
-        this.allowClientPreview = allowClientPreview || false
+        this._allowClientPreview = allowClientPreview || false
     }
 
     get context(): Context {
@@ -72,13 +72,13 @@ export class NuxtRoadizApi extends RoadizApi {
         /*
          * Pass through preview state and JWT token to Roadiz API
          */
-        if (this.allowClientPreview && this.context.req && this.context.req.url) {
+        if (this._allowClientPreview && this.context.req && this.context.req.url) {
             const currentUrl = new URL(this.context.req.url)
             if (
                 currentUrl.searchParams.has('_preview') &&
-                currentUrl.searchParams.get('_preview') == '1' &&
+                currentUrl.searchParams.get('_preview') === '1' &&
                 currentUrl.searchParams.has('token') &&
-                currentUrl.searchParams.get('token') != ''
+                currentUrl.searchParams.get('token') !== ''
             ) {
                 config.headers.params['_preview'] = '1'
                 config.headers.common.Authorization = `Bearer ${currentUrl.searchParams.get('token')}`
