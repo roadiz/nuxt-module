@@ -101,8 +101,8 @@ export class NuxtRoadizApi extends RoadizApi {
             let decodedBase64
             const base64Url = token.split('.')[1]
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-            if (atob) {
-                decodedBase64 = atob(base64)
+            if (typeof window != 'undefined' && typeof window.atob != 'undefined') {
+                decodedBase64 = window.atob(base64)
             } else {
                 decodedBase64 = Buffer.from(base64, 'base64').toString()
             }
