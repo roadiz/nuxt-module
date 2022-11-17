@@ -2,9 +2,8 @@ import { resolve } from 'path'
 import { NuxtRoadizApi, RoadizPluginConfig } from './plugin'
 import { Module } from '@nuxt/types'
 
-interface RoadizModuleOptions {
-
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface RoadizModuleOptions {}
 
 const roadizModule: Module<RoadizModuleOptions> = function (moduleOptions) {
     const options = this.options.roadiz || moduleOptions
@@ -12,7 +11,7 @@ const roadizModule: Module<RoadizModuleOptions> = function (moduleOptions) {
     this.addPlugin({
         src: resolve(__dirname, './plugin.js'),
         fileName: 'roadiz/plugins/roadiz.js',
-        options
+        options,
     })
 }
 
@@ -27,10 +26,10 @@ declare module '@nuxt/types/config/runtime' {
 
 declare module '@nuxt/types' {
     interface Context {
-        $roadiz: NuxtRoadizApi
+        $roadiz?: NuxtRoadizApi
     }
     interface NuxtAppOptions {
-        $roadiz: NuxtRoadizApi
+        $roadiz?: NuxtRoadizApi
     }
     interface Configuration {
         roadiz?: RoadizPluginConfig
@@ -39,7 +38,7 @@ declare module '@nuxt/types' {
 
 declare module 'vue/types/vue' {
     interface Vue {
-        $roadiz: NuxtRoadizApi
+        $roadiz?: NuxtRoadizApi
     }
 }
 
