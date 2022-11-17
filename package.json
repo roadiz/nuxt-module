@@ -1,6 +1,6 @@
 {
     "name": "@roadiz/nuxt-module",
-    "version": "2.1.4",
+    "version": "2.1.5",
     "description": "Nuxt Typescript module for Roadiz API client.",
     "main": "dist/module.js",
     "types": "dist/module.d.ts",
