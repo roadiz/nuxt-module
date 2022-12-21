@@ -26,7 +26,7 @@
         "access": "public"
     },
     "dependencies": {
-        "@roadiz/abstract-api-client": "^2.0.0",
+        "@roadiz/abstract-api-client": "^3.0.0",
         "axios": "^0.21.1"
     },
     "devDependencies": {
